@@ -40,15 +40,23 @@
 
         /* Valentine Text Typing */
         .valentine-text {
-            font-size: 22px;
+            font-size: 28px;
             font-weight: bold;
             color: gold;
-            text-shadow: 2px 2px 5px red;
+            text-shadow: 3px 3px 5px red;
             position: absolute;
-            top: 10%;
+            top: 15%;
             text-align: center;
             width: 100%;
             font-family: 'Calibre', sans-serif;
+            opacity: 0;
+            animation: bounceIn 1s ease-in-out forwards;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* Envelope */
@@ -67,7 +75,7 @@
 
         /* Letter */
         .letter {
-            width: 240px;
+            width: 260px;
             height: 0;
             background: #f7e5b9;
             position: absolute;
@@ -81,6 +89,7 @@
             font-size: 14px;
             line-height: 1.6;
             text-transform: uppercase;
+            color: #ff69b4; /* Baby Pink */
         }
 
         .letter.open {
@@ -117,7 +126,9 @@
 <body>
     <div class="container">
         <button id="openBtn">Open 💌</button>
-        <div class="valentine-text hidden" id="valentineText"></div>
+        <div class="valentine-text hidden" id="valentineText">
+            HAPPY VALENTINE'S DAY💖 MY <br> LOVIEE CUTIEE PARTNER
+        </div>
 
         <div class="envelope hidden" id="envelope">
             <div class="letter" id="letter">
@@ -137,7 +148,6 @@
 
     <script>
         let music = document.getElementById("bgMusic");
-        music.volume = 1.0; // Full Volume Fix
 
         function toggleMusic() {
             if (music.paused) {
@@ -150,34 +160,26 @@
         document.getElementById("openBtn").addEventListener("click", function() {
             this.style.display = "none"; 
 
-            // Start Music
+            // Start Music Fix
+            music.volume = 1.0; 
             music.play();
 
-            // Show Heading with Typing Effect
+            // Show Heading with Animation
             let valentineText = document.getElementById("valentineText");
             valentineText.classList.remove("hidden");
-            
-            let titleMessage = "HAPPY VALENTINE DAY <br> MY LOVIEE CUTIEE PARTNER";
-            let i = 0;
 
-            function typeTitle() {
-                if (i < titleMessage.length) {
-                    valentineText.innerHTML += titleMessage.charAt(i);
-                    i++;
-                    setTimeout(typeTitle, 50);
-                } else {
-                    setTimeout(() => {
-                        valentineText.classList.add("hidden");
+            setTimeout(() => {
+                valentineText.classList.add("hidden");
 
-                        let envelope = document.getElementById("envelope");
-                        envelope.classList.remove("hidden");
-                        envelope.classList.add("open");
+                let envelope = document.getElementById("envelope");
+                envelope.classList.remove("hidden");
+                envelope.classList.add("open");
 
-                        let letter = document.getElementById("letter");
-                        setTimeout(() => {
-                            letter.classList.add("open");
+                let letter = document.getElementById("letter");
+                setTimeout(() => {
+                    letter.classList.add("open");
 
-                            let message = `AYUSHI,  
+                    let message = `AYUSHI,  
 
 SACH BOLUN TOH MUJHE BADE BADE SHABDON KI ZAROORAT NAHI HAI TUJHE APNI FEELINGS BATANE KE LIYE. TU MERI LIFE KA EK AISA HISSA HAI JO BINA KISI DIKHAVE KE, BINA KISI ZABARDASTI KE, BAS APNI JAGAH BANA CHUKA HAI.  
 
@@ -189,38 +191,34 @@ ISLIYE BAS ITNA HI KAHUNGA,
 HAPPY VALENTINE'S DAY, MERI OVERTHINKING QUEEN. ❤️  
 TU TENSION MAT LE, MAIN ABHI BHI YAHIN HOON, AUR HAMESHA RAHUNGA.`;
 
-                            let j = 0;
-                            let speed = 50;
-                            let letterText = document.getElementById("letterText");
+                    let j = 0;
+                    let speed = 50;
+                    let letterText = document.getElementById("letterText");
 
-                            function typeWriter() {
-                                if (j < message.length) {
-                                    letterText.innerHTML += message.charAt(j);
-                                    j++;
-                                    setTimeout(typeWriter, speed);
-                                } else {
-                                    setTimeout(() => {
-                                        letter.classList.remove("open");
-                                        envelope.classList.remove("open");
+                    function typeWriter() {
+                        if (j < message.length) {
+                            letterText.innerHTML += message.charAt(j);
+                            letterText.scrollTop = letterText.scrollHeight;
+                            j++;
+                            setTimeout(typeWriter, speed);
+                        } else {
+                            setTimeout(() => {
+                                letter.classList.remove("open");
+                                envelope.classList.remove("open");
 
-                                        setTimeout(() => {
-                                            let stamp = document.querySelector(".stamp");
-                                            stamp.style.opacity = "1";
-                                            stamp.classList.remove("hidden");
-                                        }, 2000); // 2 sec delay before stamp
-                                    }, 3000);
-                                }
-                            }
+                                setTimeout(() => {
+                                    let stamp = document.querySelector(".stamp");
+                                    stamp.style.opacity = "1";
+                                    stamp.classList.remove("hidden");
+                                }, 2000);
+                            }, 3000);
+                        }
+                    }
 
-                            typeWriter();
-                        }, 2000);
-                    }, 1000);
-                }
-            }
-
-            typeTitle();
+                    typeWriter();
+                }, 2000);
+            }, 3000);
         });
     </script>
 </body>
-  </html>
-  
+</html>
